@@ -540,6 +540,85 @@ export const bookmarkLists = sqliteTable(
   ],
 );
 
+export const libraryCollections = sqliteTable(
+  "libraryCollections",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    kind: text("kind", { enum: ["project", "pet", "life"] }).notNull(),
+    name: text("name").notNull(),
+    description: text("description"),
+    icon: text("icon").notNull(),
+    createdAt: createdAtField(),
+    modifiedAt: modifiedAtField(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+  },
+  (lc) => [
+    index("libraryCollections_userId_idx").on(lc.userId),
+    index("libraryCollections_userId_kind_idx").on(lc.userId, lc.kind),
+  ],
+);
+
+export const libraryKindSettings = sqliteTable(
+  "libraryKindSettings",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    kind: text("kind", { enum: ["project", "pet", "life"] }).notNull(),
+    name: text("name").notNull(),
+    createdAt: createdAtField(),
+    modifiedAt: modifiedAtField(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+  },
+  (ls) => [
+    unique("libraryKindSettings_userId_kind_idx").on(ls.userId, ls.kind),
+    index("libraryKindSettings_userId_idx").on(ls.userId),
+  ],
+);
+
+export const libraryItems = sqliteTable(
+  "libraryItems",
+  {
+    id: text("id")
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => createId()),
+    collectionId: text("collectionId")
+      .notNull()
+      .references(() => libraryCollections.id, { onDelete: "cascade" }),
+    type: text("type", { enum: ["link", "note", "file"] }).notNull(),
+    title: text("title").notNull(),
+    url: text("url"),
+    note: text("note"),
+    assetId: text("assetId").references(() => assets.id, {
+      onDelete: "set null",
+    }),
+    fileName: text("fileName"),
+    contentType: text("contentType"),
+    createdAt: createdAtField(),
+    modifiedAt: modifiedAtField(),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+  },
+  (li) => [
+    index("libraryItems_userId_idx").on(li.userId),
+    index("libraryItems_assetId_idx").on(li.assetId),
+    index("libraryItems_collectionId_createdAt_idx").on(
+      li.collectionId,
+      li.createdAt,
+    ),
+  ],
+);
+
 export const bookmarksInLists = sqliteTable(
   "bookmarksInLists",
   {
@@ -1067,6 +1146,9 @@ export const userRelations = relations(users, ({ many, one }) => ({
   invites: many(invites),
   subscription: one(subscriptions),
   importSessions: many(importSessions),
+  libraryCollections: many(libraryCollections),
+  libraryKindSettings: many(libraryKindSettings),
+  libraryItems: many(libraryItems),
   listCollaborations: many(listCollaborators),
   backups: many(backupsTable),
   listInvitations: many(listInvitations),
@@ -1151,6 +1233,38 @@ export const bookmarkListsRelations = relations(
     }),
   }),
 );
+
+export const libraryCollectionsRelations = relations(
+  libraryCollections,
+  ({ one, many }) => ({
+    user: one(users, {
+      fields: [libraryCollections.userId],
+      references: [users.id],
+    }),
+    items: many(libraryItems),
+  }),
+);
+
+export const libraryKindSettingsRelations = relations(
+  libraryKindSettings,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [libraryKindSettings.userId],
+      references: [users.id],
+    }),
+  }),
+);
+
+export const libraryItemsRelations = relations(libraryItems, ({ one }) => ({
+  collection: one(libraryCollections, {
+    fields: [libraryItems.collectionId],
+    references: [libraryCollections.id],
+  }),
+  user: one(users, {
+    fields: [libraryItems.userId],
+    references: [users.id],
+  }),
+}));
 
 export const bookmarksInListsRelations = relations(
   bookmarksInLists,

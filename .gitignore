@@ -67,6 +67,9 @@ data
 .vscode
 auth_failures.log
 .claude/settings.local.json
+.karakeep-runtime/
+apps/web/AGENTS.md
+apps/web/CLAUDE.md
 
 # Local directory for AI agent contexts
 .aicontext/

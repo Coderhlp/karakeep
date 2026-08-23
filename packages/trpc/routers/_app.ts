@@ -9,6 +9,7 @@ import { feedsAppRouter } from "./feeds";
 import { highlightsAppRouter } from "./highlights";
 import { importSessionsRouter } from "./importSessions";
 import { invitesAppRouter } from "./invites";
+import { libraryAppRouter } from "./library";
 import { listsAppRouter } from "./lists";
 import { promptsAppRouter } from "./prompts";
 import { publicBookmarks } from "./publicBookmarks";
@@ -22,6 +23,7 @@ export const appRouter = router({
   bookmarks: bookmarksAppRouter,
   apiKeys: apiKeysAppRouter,
   users: usersAppRouter,
+  library: libraryAppRouter,
   lists: listsAppRouter,
   tags: tagsAppRouter,
   prompts: promptsAppRouter,

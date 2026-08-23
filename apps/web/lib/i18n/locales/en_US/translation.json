@@ -402,6 +402,10 @@
             "label": "Highlights",
             "description": "Manage saved bookmark highlights."
           },
+          "library": {
+            "label": "Library",
+            "description": "Manage personal library collections."
+          },
           "lists": {
             "label": "Lists",
             "description": "Manage lists and list membership."

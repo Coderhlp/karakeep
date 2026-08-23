@@ -15,6 +15,7 @@ import {
   ClipboardList,
   Highlighter,
   Home,
+  LibraryBig,
   Search,
   Tag,
 } from "lucide-react";
@@ -75,6 +76,11 @@ export default async function Dashboard({
         name: t("common.tags"),
         icon: <Tag size={18} />,
         path: "/dashboard/tags",
+      },
+      {
+        name: "个人资料库",
+        icon: <LibraryBig size={18} />,
+        path: "/dashboard/library",
       },
       {
         name: t("common.highlights"),

@@ -280,6 +280,10 @@
             "label": "高亮",
             "description": "管理保存的书签高亮。"
           },
+          "library": {
+            "label": "个人资料库",
+            "description": "管理个人资料库集合。"
+          },
           "lists": {
             "label": "列表",
             "description": "管理列表和列表成员身份。"

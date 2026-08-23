@@ -51,6 +51,11 @@ const RESOURCE_TRANSLATION_KEYS = {
     descriptionKey: "settings.api_keys.scopes.resources.highlights.description",
     hidden: false,
   },
+  library: {
+    labelKey: "settings.api_keys.scopes.resources.library.label",
+    descriptionKey: "settings.api_keys.scopes.resources.library.description",
+    hidden: false,
+  },
   lists: {
     labelKey: "settings.api_keys.scopes.resources.lists.label",
     descriptionKey: "settings.api_keys.scopes.resources.lists.description",

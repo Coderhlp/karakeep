@@ -1,124 +1,85 @@
-<div align="center">
-    <a href="https://github.com/karakeep-app/karakeep/actions/workflows/ci.yml">
-        <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/karakeep-app/karakeep/ci.yml" />
-    </a>
-    <a href="https://github.com/karakeep-app/karakeep/releases">
-        <img alt="GitHub Release" src="https://img.shields.io/github/v/release/karakeep-app/karakeep" />
-    </a>
-    <a href="https://discord.gg/NrgeYywsFh">
-        <img alt="Discord" src="https://img.shields.io/discord/1223681308962721802?label=chat%20on%20discord" />
-    </a>
-    <a href="https://hosted.weblate.org/engage/hoarder/">
-        <img src="https://hosted.weblate.org/widget/hoarder/hoarder/svg-badge.svg" alt="Translation status" />
-    </a>
-</div>
+# 个人资料库版 Karakeep
 
-# <img height="50px" src="./screenshots/logo.png" />
+这是基于 Karakeep 定制的个人资料库系统，用来把链接、笔记、图片、视频、PDF 和普通文件整理成主题集合。当前版本的重点不是原版的通用书签介绍，而是面向个人项目、宠物资料、日常生活资料的资料库工作流。
 
-Karakeep (previously Hoarder) is a self-hostable bookmark-everything app with a touch of AI for the data hoarders out there.
+## 当前设计
 
-![homepage screenshot](https://github.com/karakeep-app/karakeep/blob/main/screenshots/homepage.png?raw=true)
+- 中文优先的界面与默认语言。
+- 左侧导航新增“个人资料库”入口。
+- 资料库首页只展示资料库分类、集合列表和新建集合入口。
+- 每个集合使用二级详情页：`/dashboard/library/[collectionId]`。
+- 集合详情页只展示当前集合的信息、资料列表、编辑/删除集合，以及添加资料入口。
+- 空集合里的“放链接”“写笔记”“传文件”会直接响应：链接和笔记聚焦到当前详情页输入区，文件会直接打开文件选择器。
+- 支持三类集合模板：项目素材库、宠物知识库、日常生活库。
+- 支持资料类型：链接、笔记、图片、视频、PDF、文件。
 
-## Features
+## 页面结构
 
-- Bookmark links, take simple notes and store images and pdfs.
-- Automatic fetching for link titles, descriptions and images.
-- Sort your bookmarks into lists.
-- Collaborate with others on the same list.
-- Full text & semantic search of all the content stored.
-- LLM-based automatic tagging and summarization. With supports for local models using ollama!
-- LLM Agents (e.g. OpenClaw, Hermes) friendly with powerful [CLI](https://docs.karakeep.app/integrations/command-line), and [official skills](https://docs.karakeep.app/integrations/agentic-skills).
-- Rule-based engine for customized management.
-- OCR for extracting text from images.
-- [Chrome plugin](https://chromewebstore.google.com/detail/karakeep/kgcjekpmcjjogibpjebkhaanilehneje), [Firefox addon](https://addons.mozilla.org/en-US/firefox/addon/karakeep/), and [Safari extension](https://apps.apple.com/gb/app/karakeep-app/id6479258022?platform=mac) for quick bookmarking.
-- An [iOS app](https://apps.apple.com/us/app/karakeep-app/id6479258022), and an [Android app](https://play.google.com/store/apps/details?id=app.hoarder.hoardermobile&pcampaignid=web_share).
-- Mobile offline reading.
-- Auto hoarding from RSS feeds.
-- REST API and multiple clients.
-- Multi-language support.
-- Mark and store highlights from your hoarded content.
-- Full page archival (using [monolith](https://github.com/Y2Z/monolith)) to protect against link rot.
-- Auto video archiving using [yt-dlp](https://github.com/yt-dlp/yt-dlp).
-- Bulk actions support.
-- SSO support.
-- Dark mode support.
-- Self-hosting first.
-- Bookmark importers from Chrome, Pocket, Linkwarden, Omnivore, Tab Session Manager.
-- Automatic sync with browser bookmarks via [floccus](https://floccus.org/).
+- `/dashboard/library`
+  - 资料库概览页
+  - 展示分类卡片、当前分类集合、新建集合表单
 
-## Documentation
+- `/dashboard/library/[collectionId]`
+  - 集合详情页
+  - 展示单个集合的资料内容和即时添加表单
 
-- [Installation](https://docs.karakeep.app/Installation/docker)
-- [Configuration](https://docs.karakeep.app/configuration)
-- [Screenshots](https://docs.karakeep.app/screenshots)
-- [Security Considerations](https://docs.karakeep.app/security-considerations)
-- [Development](https://docs.karakeep.app/Development/setup)
+## 主要功能
 
-## Demo
+- 新建集合：选择项目、宠物或生活分类，也可以使用灵感卡快速填充名称和描述。
+- 管理集合：在集合详情页编辑或删除当前集合。
+- 添加资料：
+  - 放链接：保存标题和 URL。
+  - 写笔记：保存标题和正文。
+  - 传文件：上传图片、视频、PDF 或其他文件。
+- 浏览资料：根据内容类型展示不同的卡片预览。
+- 筛选资料：按全部、链接、笔记、图片、视频、PDF、文件筛选。
 
-You can access the demo at [https://try.karakeep.app](https://try.karakeep.app). Login with the following creds:
+## 技术栈
 
-```
-email: demo@karakeep.app
-password: demodemo
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- tRPC
+- Drizzle ORM
+- SQLite
+- Vitest
+- oxlint / oxfmt
+
+## 本地开发
+
+安装依赖后启动 Web：
+
+```bash
+pnpm web
 ```
 
-The demo is seeded with some content, but it's in read-only mode to prevent abuse.
+常用验证命令：
 
-## About the name
+```bash
+pnpm --filter @karakeep/web test -- components/dashboard/library/PersonalLibraryPage.test.ts --run
+pnpm --filter @karakeep/web typecheck
+pnpm --filter @karakeep/web lint
+```
 
-The name Karakeep is inspired by the Arabic word "كراكيب" (karakeeb), a colloquial term commonly used to refer to miscellaneous clutter, odds and ends, or items that may seem disorganized but often hold personal value or hidden usefulness. It evokes the image of a messy drawer or forgotten box, full of stuff you can't quite throw away—because somehow, it matters (or more likely, because you're a hoarder!).
+数据库结构更新后运行迁移：
 
-## Stack
+```bash
+pnpm db:migrate
+```
 
-- [NextJS](https://nextjs.org/) for the web app. Using app router.
-- [Drizzle](https://orm.drizzle.team/) for the database and its migrations.
-- [NextAuth](https://next-auth.js.org) for authentication.
-- [tRPC](https://trpc.io) for client->server communication.
-- [Puppeteer](https://pptr.dev/) for crawling the bookmarks.
-- [OpenAI](https://openai.com/) because AI is so hot right now.
-- [Meilisearch](https://meilisearch.com) for the full content search.
+## 当前版本范围
 
-## Why did I build it?
+本版本聚焦个人资料库的核心闭环：
 
-I browse reddit, twitter and hackernews a lot from my phone. I frequently find interesting stuff (articles, tools, etc) that I'd like to bookmark and read later when I'm in front of a laptop. Typical read-it-later apps usecase. Initially, I was using [Pocket](https://getpocket.com) for that. Then I got into self-hosting and I wanted to self-host this usecase. I used [memos](https://github.com/usememos/memos) for those quick notes and I loved it but it was lacking some features that I found important for that usecase such as link previews and automatic tagging (more on that in the next section).
+1. 进入资料库首页。
+2. 新建主题集合。
+3. 打开集合二级详情页。
+4. 添加链接、笔记或文件。
+5. 在集合内浏览和筛选资料。
 
-I'm a systems engineer in my day job (and have been for the past 7 years). I didn't want to get too detached from the web development world. I decided to build this app as a way to keep my hand dirty with web development, and at the same time, build something that I care about and use every day.
-
-## Alternatives
-
-- [memos](https://github.com/usememos/memos): I love memos. I have it running on my home server and it's one of my most used self-hosted apps. It doesn't, however, archive or preview the links shared in it. It's just that I dump a lot of links there and I'd have loved if I'd be able to figure which link is that by just looking at my timeline. Also, given the variety of things I dump there, I'd have loved if it does some sort of automatic tagging for what I save there. This is exactly the usecase that I'm trying to tackle with Karakeep.
-- [mymind](https://mymind.com/): Mymind is the closest alternative to this project and from where I drew a lot of inspirations. It's a commercial product though.
-- [raindrop](https://raindrop.io): A polished open source bookmark manager that supports links, images and files. It's not self-hostable though.
-- Bookmark managers (mostly focused on bookmarking links):
-    - [Pocket](https://getpocket.com) (Dead): Pocket is what hooked me into the whole idea of read-it-later apps. I used it [a lot](https://blog.mbassem.com/2019/01/27/favorite-articles-2018/). However, I recently got into home-labbing and became obsessed with the idea of running my services in my home server. Karakeep is meant to be a self-hosting first app. Mozilla recently announced that it's shutting down pocket.
-    - [Linkwarden](https://linkwarden.app/): An open-source self-hostable bookmark manager that I ran for a bit in my homelab. It's focused mostly on links and supports collaborative collections.
-    - [Wallabag](https://wallabag.it): Wallabag is a well-established open source read-it-later app written in php.
-    - [Shiori](https://github.com/go-shiori/shiori): Shiori is meant to be an open source pocket clone written in Go.
-
-## Translations
-
-Karakeep uses Weblate for managing translations. If you want to help translate Karakeep, you can do so [here](https://hosted.weblate.org/engage/hoarder/).
-
-## Karakeep Cloud ☁️
-
-If you're not comfortable with self-hosting, you can use our managed Karakeep cloud at [cloud.karakeep.app](https://cloud.karakeep.app). Cloud subscriptions support the development of Karakeep.
-
-## Support
-
-If you're enjoying using Karakeep, drop a ⭐️ on the repo!
-
-<a href="https://www.buymeacoffee.com/mbassem" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
-## Community Channels
-
-- Join us on [Discord](https://discord.gg/NrgeYywsFh).
-- Follow us on Twitter: [@karakeep_app](https://x.com/karakeep_app).
+后续如果继续扩展，优先考虑集合搜索、批量导入、资料标签和更细的文件预览能力。
 
 ## License
 
-Karakeep is licensed under [AGPL-3.0](https://github.com/karakeep-app/karakeep/blob/main/LICENSE) and owned by [Localhost Labs Ltd](https://localhostlabs.co.uk).
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=karakeep-app/karakeep&type=Date)](https://star-history.com/#karakeep-app/karakeep&Date)
+本项目继承原 Karakeep 的 AGPL-3.0 许可。

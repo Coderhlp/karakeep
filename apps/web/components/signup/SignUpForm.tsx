@@ -71,10 +71,10 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">
-            Sign Up Unavailable
+            注册不可用
           </CardTitle>
           <CardDescription>
-            Account registration is currently disabled
+            当前已禁用账号注册
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -82,12 +82,11 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
             <Alert>
               <UserX className="h-4 w-4" />
               <AlertDescription>
-                Signups are currently disabled. Please contact an administrator
-                for access.
+                当前已禁用注册。请联系管理员获取访问权限。
               </AlertDescription>
             </Alert>
             <Button asChild className="w-full">
-              <Link href="/signin">Back to Sign In</Link>
+              <Link href="/signin">返回登录</Link>
             </Button>
           </div>
         </CardContent>
@@ -99,10 +98,10 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
     <Card className="w-full">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">
-          Create Your Account
+          创建账号
         </CardTitle>
         <CardDescription>
-          Join Karakeep to start organizing your bookmarks
+          加入 Karakeep，开始整理你的书签
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -112,7 +111,7 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               if (turnstileSiteKey && !value.turnstileToken) {
                 form.setError("turnstileToken", {
                   type: "manual",
-                  message: "Please complete the verification challenge",
+                  message: "请完成验证",
                 });
                 return;
               }
@@ -145,7 +144,7 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
                   );
                 } else {
                   setErrorMessage(
-                    resp?.error ?? "Hit an unexpected error while signing in",
+                    resp?.error ?? "登录时遇到意外错误",
                   );
                 }
                 // Reset turnstile widget on error to get a new token
@@ -175,11 +174,11 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Full Name</FormLabel>
+                  <FormLabel>姓名</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Enter your full name"
+                      placeholder="请输入姓名"
                       {...field}
                     />
                   </FormControl>
@@ -193,11 +192,11 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>邮箱</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder="请输入邮箱"
                       {...field}
                     />
                   </FormControl>
@@ -211,11 +210,11 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>密码</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Create a password"
+                      placeholder="请创建密码"
                       {...field}
                     />
                   </FormControl>
@@ -229,11 +228,11 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel>确认密码</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder="Confirm your password"
+                      placeholder="请再次输入密码"
                       {...field}
                     />
                   </FormControl>
@@ -248,7 +247,7 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
                 name="turnstileToken"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Verification</FormLabel>
+                    <FormLabel>验证</FormLabel>
                     <FormControl>
                       <Turnstile
                         ref={turnstileRef}
@@ -263,7 +262,7 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
                           form.setError("turnstileToken", {
                             type: "manual",
                             message:
-                              "Verification failed, please reload the challenge",
+                              "验证失败，请重新加载验证",
                           });
                         }}
                       />
@@ -281,14 +280,13 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
               }
               className="w-full"
             >
-              Sign up
+              注册
             </ActionButton>
 
             {(clientConfig.legal.termsOfServiceUrl ||
               clientConfig.legal.privacyPolicyUrl) && (
               <p className="text-center text-xs text-muted-foreground">
-                By clicking on &apos;Sign up&apos; above, you are agreeing to
-                the{" "}
+                点击上方“注册”即表示你同意
                 {clientConfig.legal.termsOfServiceUrl && (
                   <Link
                     href={clientConfig.legal.termsOfServiceUrl}
@@ -296,12 +294,12 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
                     rel="noopener noreferrer"
                     className="underline hover:text-foreground"
                   >
-                    Terms of Service
+                    服务条款
                   </Link>
                 )}
                 {clientConfig.legal.termsOfServiceUrl &&
                   clientConfig.legal.privacyPolicyUrl &&
-                  " and "}
+                  "和"}
                 {clientConfig.legal.privacyPolicyUrl && (
                   <Link
                     href={clientConfig.legal.privacyPolicyUrl}
@@ -309,7 +307,7 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
                     rel="noopener noreferrer"
                     className="underline hover:text-foreground"
                   >
-                    Privacy Policy
+                    隐私政策
                   </Link>
                 )}
                 .
@@ -320,12 +318,12 @@ export default function SignUpForm({ redirectUrl }: SignUpFormProps) {
 
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Already have an account?{" "}
+            已有账号？{" "}
             <Link
               href="/signin"
               className="font-medium text-blue-600 hover:text-blue-500"
             >
-              Sign in
+              登录
             </Link>
           </p>
         </div>

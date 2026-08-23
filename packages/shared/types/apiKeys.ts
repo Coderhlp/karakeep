@@ -8,6 +8,7 @@ export const API_KEY_SCOPE_RESOURCES = [
   "bookmarks",
   "feeds",
   "highlights",
+  "library",
   "lists",
   "prompts",
   "rules",
